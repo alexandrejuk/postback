@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -44,9 +45,11 @@ app.use('/api', router.get('/postback', (req, res) => {
     .then(postbacks => res.json(postbacks))
 }))
 
-app.use('/api', router.get('/signature/:transactionId', async (req, res) => {
-  const response = await axios.get(`https://api.pagar.me/1/transactions/${req.params.transactionId}/postbacks?api_key=${process.env.api_key_pagarme}`)
-  res.json(response)
+app.use('/api', router.get('/signature/:transactionId', (req, res) => {
+  axios.get(`https://api.pagar.me/1/transactions/${req.params.transactionId}/postbacks?api_key=${process.env.API_KEY_PAGARME}`)
+    .then(response => {
+      res.json(response.data)
+    })
 }))
 
 app.listen(Port, () => console.log('running...'))
