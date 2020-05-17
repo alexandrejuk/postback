@@ -22,6 +22,7 @@ const postbackSchema = new mongoose.Schema({
     status: String,
     amount: Number,
   },
+  signature: String,
 })
 
 var Postback = mongoose.model('Postback', postbackSchema)
