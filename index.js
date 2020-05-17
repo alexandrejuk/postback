@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const Port = process.env.PORT || 3003
 const app = express()
 const router = express.Router()
+const axios = require('axios')
 
 // db connection
 const dburl = 'mongodb://sandbox:sandbox123*@ds115219.mlab.com:15219/sandbox'
@@ -43,5 +44,9 @@ app.use('/api', router.get('/postback', (req, res) => {
     .then(postbacks => res.json(postbacks))
 }))
 
+app.use('/api', router.get('/signature/:transactionId', async (req, res) => {
+  const response = await axios.get(`https://api.pagar.me/1/transactions/${req.params.transactionId}/postbacks?api_key=${process.env.api_key_pagarme}`)
+  res.json(response)
+}))
 
 app.listen(Port, () => console.log('running...'))
