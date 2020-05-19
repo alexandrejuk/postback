@@ -24,6 +24,12 @@ const postbackSchema = new mongoose.Schema({
     status: String,
     amount: Number,
   },
+  metadata: {
+    plan: {
+      type: String,
+      userId: String
+    }
+  },
   signature: String,
 })
 
